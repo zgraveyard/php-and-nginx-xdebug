@@ -14,6 +14,7 @@ LABEL Maintainer="Zaher Ghaibeh <z@zah.me>" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0.0"
 
+USER root
 
 COPY root/. /
 
@@ -27,11 +28,12 @@ RUN set -ex \
     curl -Ls https://github.com/nimmis/docker-utils/archive/master.tar.gz | tar xfz - && \
     ./docker-utils-master/install.sh && \
     rm -Rf ./docker-utils-master && \
-    docker-php-source extract && \
-    pecl install opcache && \
-    docker-php-ext-enable opcache && \
-    docker-php-source delete && \
-    docker-php-ext-install intl && \
+    # docker-php-source extract && \
+    # # pecl install opcache && \
+    # docker-php-ext-configure opcache --enable-opcache \
+    # docker-php-ext-enable opcache && \
+    # docker-php-source delete && \
+    docker-php-ext-install intl opcache && \
     sed  -i "s|\*.emerg|\#\*.emerg|" /etc/rsyslog.conf && \
     sed -i 's/$ModLoad imklog/#$ModLoad imklog/' /etc/rsyslog.conf && \
     sed -i 's/$KLogPermitNonKernelFacility on/#$KLogPermitNonKernelFacility on/' /etc/rsyslog.conf && \
