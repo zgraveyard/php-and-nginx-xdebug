@@ -28,7 +28,7 @@ RUN set -ex \
     curl -Ls https://github.com/nimmis/docker-utils/archive/master.tar.gz | tar xfz - && \
     ./docker-utils-master/install.sh && \
     rm -Rf ./docker-utils-master && \
-    docker-php-ext-install intl opcache && \
+    docker-php-ext-install -j$(nproc) intl opcache && \
     sed  -i "s|\*.emerg|\#\*.emerg|" /etc/rsyslog.conf && \
     sed -i 's/$ModLoad imklog/#$ModLoad imklog/' /etc/rsyslog.conf && \
     sed -i 's/$KLogPermitNonKernelFacility on/#$KLogPermitNonKernelFacility on/' /etc/rsyslog.conf && \
