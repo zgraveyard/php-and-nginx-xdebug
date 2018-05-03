@@ -28,11 +28,6 @@ RUN set -ex \
     curl -Ls https://github.com/nimmis/docker-utils/archive/master.tar.gz | tar xfz - && \
     ./docker-utils-master/install.sh && \
     rm -Rf ./docker-utils-master && \
-    # docker-php-source extract && \
-    # # pecl install opcache && \
-    # docker-php-ext-configure opcache --enable-opcache \
-    # docker-php-ext-enable opcache && \
-    # docker-php-source delete && \
     docker-php-ext-install intl opcache && \
     sed  -i "s|\*.emerg|\#\*.emerg|" /etc/rsyslog.conf && \
     sed -i 's/$ModLoad imklog/#$ModLoad imklog/' /etc/rsyslog.conf && \
